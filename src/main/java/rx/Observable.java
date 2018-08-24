@@ -49,7 +49,16 @@ import rx.subscriptions.Subscriptions;
  *   一个工具，提供了对subscriber对象进行变换的能力，并且通过onSubscribe对象将变换后的subscriber关
  *   联到原有的Observable上。
  *
- * 2.
+ * 2.操作符每次新建的Observable都会通过onSubscribe对象与原有的Observable建立关联。
+ *
+ * 3.操作符主要的操作有两个：
+ *   1)将subscriber使用操作符进行包装
+ *   2)通过操作符生成的新Observable的onSubscribe对象，将原有Observable和新的subscriber进行关联。
+ *
+ * 4.不论使用多少操作符，数据源其实一直没有变化，都是最初的Observable。但是subscriber是被层层包装的。
+ *   最后执行的操作是原始的Observable回调被层层包装后的subscriber。
+ *
+ * 5.Observable -> 数据源，onSubscribe -> 连接Observable和subscribe，subscriber -> 处理结果
  */
 public class Observable<T> {
 
